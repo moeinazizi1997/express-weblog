@@ -6,6 +6,8 @@ import methodOverride from 'method-override';
 import path from "path";
 import hpp from "hpp";
 import xss from "xss";
+import { config } from "./config/app.config";
+import connectDatabase from "./config/db";
 dotenv.config();
 
 const app = express();
@@ -44,9 +46,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT
 
-const server = app.listen(PORT,()=>{
+const server = app.listen(PORT,async ()=>{
+    connectDatabase();
     console.log(`Server is listening on port ${PORT}`);
 });
 
