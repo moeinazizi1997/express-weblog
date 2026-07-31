@@ -1,14 +1,18 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import cors from "cors";
 import helmet from "helmet";
 import express from "express";
-import dotenv from "dotenv";
 import methodOverride from 'method-override';
 import path from "path";
 import hpp from "hpp";
 import xss from "xss";
 import { config } from "./config/app.config";
 import connectDatabase from "./config/db";
-dotenv.config();
+import limiter from "./middlewares/rateLimiter";
+
+
 
 const app = express();
 
@@ -42,9 +46,9 @@ app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
 
-
-
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+app.use(limiter);
 
 const PORT = config.PORT
 
