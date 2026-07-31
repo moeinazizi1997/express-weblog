@@ -11,6 +11,7 @@ import xss from "xss";
 import { config } from "./config/app.config";
 import connectDatabase from "./config/db";
 import limiter from "./middlewares/rateLimiter";
+import errorHandlerMiddleware from "./middlewares/errorHandler.middleware";
 
 
 
@@ -50,7 +51,9 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(limiter);
 
-const PORT = config.PORT
+app.use(errorHandlerMiddleware);
+
+const PORT = config.PORT;
 
 const server = app.listen(PORT,async ()=>{
     connectDatabase();
