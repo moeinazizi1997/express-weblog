@@ -12,7 +12,7 @@ import { config } from "./config/app.config";
 import connectDatabase from "./config/db";
 import limiter from "./middlewares/rateLimiter";
 import errorHandlerMiddleware from "./middlewares/errorHandler.middleware";
-
+import userRouter from "./modules/user/routes/user.routes";
 
 
 const app = express();
@@ -50,6 +50,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(limiter);
+
+app.use("/api/v1/users",userRouter);
 
 app.use(errorHandlerMiddleware);
 

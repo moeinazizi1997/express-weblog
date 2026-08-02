@@ -14,7 +14,7 @@ const formatZodError = (res: Response, error: z.ZodError) => {
 };
 
 const errorHandlerMiddleware : ErrorRequestHandler = (err,req,res,next): any=>{
-    logger.error(`Error occured on PATH: ${req.path} and error is:`,err.message);
+    logger.error(`Error occured on PATH: ${req.path} and error is:${err.message}`);
 
     if(err instanceof AppError){
         return res.status(err.statusCode).json(ApiResponse.error([err.message]))
