@@ -5,6 +5,12 @@ import { CreatePostDTO } from "../DTOs/post.dto";
 import { IPost,Post } from "../models/post.model";
 
 class PostService{
+
+    public async getPosts():Promise<IPost[]>{
+        const posts = await Post.find({});
+
+        return posts;
+    }
     public async createPost(authorId : string, dto: CreatePostDTO, imagePath?: string): Promise<IPost>{
         const existingUser = await User.findOne({ _id: authorId });
 
@@ -23,7 +29,7 @@ class PostService{
         return post;
     };
 
-    
+
 };
 
 export default PostService;

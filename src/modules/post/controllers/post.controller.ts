@@ -7,6 +7,13 @@ import { ApiResponse } from "../../../utils/apiResponse";
 class PostController{
     constructor(public readonly postService : PostService){}
 
+    public getPosts = asyncHandler(
+        async(req:Request,res:Response,next:NextFunction):Promise<Response>=>{
+            const posts = await this.postService.getPosts();
+            return res.status(HTTPSTATUS.OK).json(ApiResponse.success(posts));
+        }
+    );
+
     public createPost = asyncHandler(
         async (req:any,res:Response,next:NextFunction): Promise<Response>=>{
             const imagePath = req.file ? `/uploads/${req.file.filename}` : undefined;
