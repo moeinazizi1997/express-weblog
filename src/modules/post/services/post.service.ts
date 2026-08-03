@@ -46,6 +46,16 @@ class PostService{
             throw new NotFoundException("Post with the given data not found!");
         }
         return post;
+    };
+
+    public async deletePost(id:string){
+        const post = await Post.findByIdAndDelete(id).populate('author', 'displayName email');;
+
+        if (!post){
+            throw new NotFoundException("Post with the given id not found");
+        }
+
+        return post;
     }
 };
 

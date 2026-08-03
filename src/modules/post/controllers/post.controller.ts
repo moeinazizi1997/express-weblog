@@ -17,7 +17,7 @@ class PostController{
     public getPost = asyncHandler(
         async(req:Request,res:Response,next:NextFunction):Promise<Response>=>{
             const {id} = req.params;
-            const post = await this.postService.findById(id);
+            const post = await this.postService.findById(id as string);
 
             return res.status(HTTPSTATUS.OK).json(ApiResponse.success(post));
         }
@@ -45,7 +45,16 @@ class PostController{
 
             return res.status(HTTPSTATUS.OK).json(ApiResponse.success(post));
         }
-    )
+    );
+
+    public deletePost = asyncHandler(
+        async(req:Request,res:Response,next:NextFunction):Promise<Response>=>{
+            const {id} = req.params;
+            const post = await this.postService.deletePost(id as string);
+            
+            return res.status(HTTPSTATUS.OK).json(post);
+        }
+    );
 };
 
 export default PostController;
